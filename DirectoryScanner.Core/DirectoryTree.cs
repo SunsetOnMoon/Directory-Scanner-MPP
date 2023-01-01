@@ -1,6 +1,6 @@
 ﻿namespace DirectoryScanner.Core
 {
-    internal class DirectoryTree
+    public class DirectoryTree
     {
         public Node RootDir { get; }
 

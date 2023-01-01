@@ -1,6 +1,6 @@
 ﻿namespace DirectoryScanner.Core
 {
-    internal class Node
+    public class Node
     {
         public string PathToFile { get; }
         public string FileName { get; }
