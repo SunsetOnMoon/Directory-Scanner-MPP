@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using System.Threading.Tasks;
 
 namespace DirectoryScanner.UserInterface
 {
@@ -8,7 +9,7 @@ namespace DirectoryScanner.UserInterface
         private readonly Action<object> _execute;
         private readonly Predicate<object> _canExecute;
 
-        public Command(Action<object> execute, Func<object, bool> canExecute)
+        public Command(Action<object> execute, Predicate<object> canExecute)
         {
             _execute = execute;
             _canExecute = canExecute;
@@ -22,7 +23,7 @@ namespace DirectoryScanner.UserInterface
 
         public bool CanExecute(object param)
         {
-            return _canExecute(param);
+            return _canExecute == null || _canExecute(param);
         }
 
         public void Execute(object param)
