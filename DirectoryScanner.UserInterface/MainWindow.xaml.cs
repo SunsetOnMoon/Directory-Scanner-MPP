@@ -23,6 +23,7 @@ namespace DirectoryScanner.UserInterface
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new ViewModel();
         }
     }
 }

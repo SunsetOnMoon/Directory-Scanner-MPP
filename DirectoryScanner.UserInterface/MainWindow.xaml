@@ -4,9 +4,46 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DirectoryScanner.UserInterface"
+        xmlns:self ="clr-namespace:DirectoryScanner.UserInterface" xmlns:viewmodels="clr-namespace:DirectoryScanner.UserInterface" 
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        d:DataContext="{d:DesignInstance Type=local:ViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Button Content="Начать сканирование" HorizontalAlignment="Left" Margin="70,332,0,0" VerticalAlignment="Top" 
+               Command="{Binding Path=StartScanningCommand}" IsEnabled="{Binding !IsScanning}" Height="49" Width="160" />
+        <Button Content="Остановить сканирование" HorizontalAlignment="Left" Margin="250,332,0,0" VerticalAlignment="Top"
+                Command="{Binding Path=StopScanningCommand}" IsEnabled="{Binding IsScanning}" Height="49" Width="160" />
+        <Button Content="Выбрать директорию" HorizontalAlignment="Left" Margin="654,332,0,0" VerticalAlignment="Top"
+                Command="{Binding Path=SetDirectoryCommand}" Height="49"/>
+        <TreeView Margin="0,0,0,107" ItemsSource="{Binding Root.Root}">
+            <TreeView.Resources>
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}" DataType="{x:Type self:Directory}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="\Resources\folder.png" Width="15" Height="15" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding Name}" />
+                        <TextBlock Text=" (" />
+                        <TextBlock Text="{Binding Size}" />
+                        <TextBlock Text=" bytes, " />
+                        <TextBlock Text="{Binding Percents, StringFormat=N2}" />
+                        <TextBlock Text="%" />
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+                <DataTemplate DataType="{x:Type self:File}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Resources/file.png" Width="15" Height="15" Margin="0,0,5,0" />
+                        <TextBlock Text="{Binding Name}" />
+                        <TextBlock Text=" (" />
+                        <TextBlock Text="{Binding Size}" />
+                        <TextBlock Text=" bytes, " />
+                        <TextBlock Text="{Binding Percents, StringFormat=N2}" />
+                        <TextBlock Text="%" />
+                    </StackPanel>
+                </DataTemplate>
+            </TreeView.Resources>
+        </TreeView>
+        <Image HorizontalAlignment="Left" Height="60" Margin="0,332,0,0" VerticalAlignment="Top" Width="60"
+               gif:ImageBehavior.AnimatedSource="/Resources/loupe.gif" IsEnabled="{Binding IsScanning}"/>
 
     </Grid>
 </Window>

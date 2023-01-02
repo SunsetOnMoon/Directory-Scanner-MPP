@@ -7,9 +7,14 @@
     <UseWPF>true</UseWPF>
 	  <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
+  <ItemGroup>
+	  <Resource Include="Resources\file.png" />
+	  <Resource Include="Resources\folder.png" />
+	  <Resource Include="Resources\loupe.gif" />
+  </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\" />
+    <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>

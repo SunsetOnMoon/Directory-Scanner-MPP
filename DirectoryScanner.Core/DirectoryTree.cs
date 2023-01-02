@@ -12,9 +12,9 @@
 
         private static void GetDirectorySize(Node node)
         {
-            if (node != null)
+            if (node.ChildNodes != null)
             {
-                foreach (Node childNode in node.ChildNodes)
+                foreach (var childNode in node.ChildNodes)
                 {
                     GetDirectorySize(childNode);
                     node.FileSize += childNode.FileSize;

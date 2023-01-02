@@ -48,7 +48,7 @@ namespace DirectoryScanner.Core
                     {
                     }
                 }
-            } while ((_semaphore.CurrentCount <= maxThreadsCount || !_nodeProcQueue.IsEmpty) && token.IsCancellationRequested);
+            } while ((_semaphore.CurrentCount != maxThreadsCount || !_nodeProcQueue.IsEmpty) && !token.IsCancellationRequested);
 
             IsScanning = false;
             return new DirectoryTree(rootDir);
@@ -80,7 +80,7 @@ namespace DirectoryScanner.Core
                 return;
             }
 
-            foreach (DirectoryInfo subDirInfo in subDirsInfo)
+            foreach (var subDirInfo in subDirsInfo)
             {
                 if (cancellationToken.IsCancellationRequested)
                     return;
@@ -90,7 +90,7 @@ namespace DirectoryScanner.Core
             }
 
             fileInfos = dirInfo.GetFiles();
-            foreach(FileInfo fileInfo in fileInfos)
+            foreach(var fileInfo in fileInfos)
             {
                 if (cancellationToken.IsCancellationRequested)
                     return;
