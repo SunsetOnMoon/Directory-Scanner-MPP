@@ -5,5 +5,6 @@
         public string Name { get; }
         public ulong Size { get; }
         public double Percents { get; }
+        public string FullPath { get; }
     }
 }
