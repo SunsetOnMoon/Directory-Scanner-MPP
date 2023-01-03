@@ -3,14 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:DirectoryScanner.UserInterface"
         xmlns:self ="clr-namespace:DirectoryScanner.UserInterface" xmlns:viewmodels="clr-namespace:DirectoryScanner.UserInterface" 
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         d:DataContext="{d:DesignInstance Type=local:ViewModel}"
         
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Directory Scanner" Height="450" Width="800" Icon="Resources/icon.ico">
     <Grid>
         <Button Content="Начать сканирование" HorizontalAlignment="Left" Margin="70,332,0,0" VerticalAlignment="Top" 
                Command="{Binding Path=StartScanningCommand}" IsEnabled="{Binding !IsScanning}" Height="49" Width="160" />
@@ -19,14 +18,12 @@
         <Button Content="Выбрать директорию" HorizontalAlignment="Left" Margin="654,332,0,0" VerticalAlignment="Top"
                 Command="{Binding Path=SetDirectoryCommand}" Height="49"/>
         <TreeView Name="tvDirectories" Margin="0,0,0,107" ItemsSource="{Binding Root.Root}" >
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseDoubleClick">
-                    <i:InvokeCommandAction Command="{Binding OpenDirectoryCommand}" CommandParameter="{Binding SelectedDirectory}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
             <TreeView.Resources>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}" DataType="{x:Type self:Directory}">
                     <StackPanel Orientation="Horizontal" >
+                        <StackPanel.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding OpenDirectoryCommand}" />
+                        </StackPanel.InputBindings>
                         <Image Source="\Resources\folder.png" Width="15" Height="15" Margin="0,0,5,0"/>
                         <TextBlock Text="{Binding Name}" />
                         <TextBlock Text=" (" />
@@ -38,6 +35,9 @@
                 </HierarchicalDataTemplate>
                 <DataTemplate DataType="{x:Type self:File}">
                     <StackPanel Orientation="Horizontal">
+                        <StackPanel.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding Path=OpenFileCommand}" />
+                        </StackPanel.InputBindings>
                         <Image Source="/Resources/file.png" Width="15" Height="15" Margin="0,0,5,0" />
                         <TextBlock Text="{Binding Name}" />
                         <TextBlock Text=" (" />

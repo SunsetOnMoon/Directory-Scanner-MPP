@@ -11,6 +11,7 @@
 	  <Resource Include="Resources\file.png" />
 	  <Resource Include="Resources\folder.png" />
 	  <Resource Include="Resources\loupe.gif" />
+	  <Resource Include="Resources\icon.ico" />
   </ItemGroup>
 
   <ItemGroup>

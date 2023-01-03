@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Windows.Input;
 
 namespace DirectoryScanner.UserInterface
 {
@@ -10,14 +12,31 @@ namespace DirectoryScanner.UserInterface
             Size = size;
             Percents = percents;
             FullPath = fullPath;
+            OpenDirectoryCommand = new Command(_ =>
+            {
+                OnDoubleClick();
+            }, _ => true);
         }
-
-
         public string Name { get; }
         public ulong Size { get; }
         public double Percents { get; }
         public string FullPath { get; }
         public ObservableCollection<IDirectoryTreeObject> Children { get; } = new();
+
+        public ICommand OpenDirectoryCommand { get; }
+        private void OnDoubleClick()
+        {
+            Process PrFolder = new Process();
+            ProcessStartInfo psi = new ProcessStartInfo();
+            //string file = @"C:\Work\5 semester\MPP\TestFolder\test1\test2doc.txt";
+            //string file = $@"{selectedFile.PathToFile}\{selectedFile.FileName}";
+            psi.CreateNoWindow = true;
+            psi.WindowStyle = ProcessWindowStyle.Normal;
+            psi.FileName = "explorer";
+            psi.Arguments = @"/n, /open, " + FullPath;
+            PrFolder.StartInfo = psi;
+            PrFolder.Start();
+        }
     
     }
 
@@ -29,12 +48,31 @@ namespace DirectoryScanner.UserInterface
             Size = size;
             Percents = percents;
             FullPath = fullPath;
+            this.OpenFileCommand = new Command(_ =>
+            {
+                OnDoubleClick();
+            }, _ => true);
         }
 
         public string Name { get; }
         public ulong Size { get; }
         public double Percents { get; }
         public string FullPath { get; }
+
+        public ICommand OpenFileCommand { get; }
+        private void OnDoubleClick()
+        {
+            Process PrFolder = new Process();
+            ProcessStartInfo psi = new ProcessStartInfo();
+            //string file = @"C:\Work\5 semester\MPP\TestFolder\test1\test2doc.txt";
+            //string file = $@"{selectedFile.PathToFile}\{selectedFile.FileName}";
+            psi.CreateNoWindow = true;
+            psi.WindowStyle = ProcessWindowStyle.Normal;
+            psi.FileName = "explorer";
+            psi.Arguments = @"/n, /select, " + this.FullPath;
+            PrFolder.StartInfo = psi;
+            PrFolder.Start();
+        }
     }
 
     public class DirectoryTree
